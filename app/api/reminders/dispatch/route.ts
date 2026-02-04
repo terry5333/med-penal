@@ -1,4 +1,4 @@
-import { db, admin } from "../../../../lib/firebaseAdmin";
+import { admin, getDb } from "../../../../lib/firebaseAdmin";
 import { buildReminderFlex, pushMessage } from "../../../../lib/line";
 import { requirePanelToken } from "../../../../lib/security";
 
@@ -29,6 +29,7 @@ function toTimeParts(date: Date, timeZone: string) {
 }
 
 export async function POST(request: Request) {
+  const db = getDb();
   const auth = requirePanelToken(request);
   if (!auth.ok) return auth.res;
 

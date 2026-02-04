@@ -1,8 +1,9 @@
-import { db } from "../../../../lib/firebaseAdmin";
+import { getDb } from "../../../../lib/firebaseAdmin";
 
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
+  const db = getDb();
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get("userId");
   if (!userId) {

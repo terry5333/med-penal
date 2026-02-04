@@ -1,8 +1,9 @@
-import { db, admin } from "../../../lib/firebaseAdmin";
+import { admin, getDb } from "../../../lib/firebaseAdmin";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  const db = getDb();
   const body = (await request.json()) as {
     userId: string;
     medId: string;

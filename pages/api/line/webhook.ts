@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { admin, db } from "../../../lib/firebaseAdmin";
+import { admin, getDb } from "../../../lib/firebaseAdmin";
 import { replyMessage, verifySignature } from "../../../lib/line";
 
 export const config = {
@@ -19,6 +19,7 @@ function getRawBody(req: NextApiRequest): Promise<string> {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const db = getDb();
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).send("Method Not Allowed");
