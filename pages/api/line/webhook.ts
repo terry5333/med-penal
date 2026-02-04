@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { admin, db } from "@/lib/firebaseAdmin";
-import { replyMessage, verifySignature } from "@/lib/line";
+import { admin, db } from "../../../lib/firebaseAdmin";
+import { replyMessage, verifySignature } from "../../../lib/line";
 
 export const config = {
   api: {

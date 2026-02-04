@@ -1,6 +1,6 @@
-import { db, admin } from "@/lib/firebaseAdmin";
-import { buildReminderFlex, pushMessage } from "@/lib/line";
-import { requirePanelToken } from "@/lib/security";
+import { db, admin } from "../../../../lib/firebaseAdmin";
+import { buildReminderFlex, pushMessage } from "../../../../lib/line";
+import { requirePanelToken } from "../../../../lib/security";
 
 export const runtime = "nodejs";
 
