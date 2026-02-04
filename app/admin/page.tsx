@@ -7,6 +7,7 @@ type IntakeItem = {
   id: string;
   userId: string;
   medId: string;
+  medicationName?: string;
   status: string;
   scheduledTime?: admin.firestore.Timestamp;
   takenTime?: admin.firestore.Timestamp;
@@ -24,9 +25,17 @@ async function getDashboardData() {
     db.collection("intakes").orderBy("scheduledTime", "desc").limit(10).get(),
   ]);
 
+  const medicationNameMap = new Map(
+    medicationsSnap.docs.map((doc) => [doc.id, doc.data().name as string])
+  );
+
   const recentIntakes = intakesSnap.docs.map((doc) => {
     const data = doc.data() as Omit<IntakeItem, "id">;
-    return { id: doc.id, ...data };
+    return {
+      id: doc.id,
+      ...data,
+      medicationName: medicationNameMap.get(data.medId) || "未命名藥品",
+    };
   });
 
   const takenCount = recentIntakes.filter((item) => item.status === "taken").length;
@@ -123,7 +132,10 @@ export default async function AdminPage() {
                   <tr key={item.id} style={{ borderTop: "1px solid #e5e7eb" }}>
                     <td style={{ padding: "10px 12px" }}>{item.status}</td>
                     <td style={{ padding: "10px 12px" }}>{item.userId}</td>
-                    <td style={{ padding: "10px 12px" }}>{item.medId}</td>
+                    <td style={{ padding: "10px 12px" }}>
+                      <div>{item.medicationName}</div>
+                      <div style={{ color: "#9ca3af", fontSize: "12px" }}>{item.medId}</div>
+                    </td>
                     <td style={{ padding: "10px 12px" }}>
                       {formatTimestamp(item.scheduledTime)}
                     </td>
