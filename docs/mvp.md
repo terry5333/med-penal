@@ -4,6 +4,7 @@
 - LINE Bot Webhook 接收訊息（打卡）
 - Scheduler 呼叫 `/api/reminders/dispatch` 觸發提醒
 - Firestore 作為資料庫
+- 管理後台 `/admin` 顯示近期統計與打卡紀錄
 
 ## Firestore Collection
 
@@ -47,6 +48,7 @@
 - Webhook URL：`https://<your-vercel-domain>/api/line/webhook`
 - 排程呼叫：`https://<your-vercel-domain>/api/reminders/dispatch`
 - 請在 Vercel 專案設定填入環境變數（與 README 相同）
+- 管理後台會使用 Vercel 的環境變數連線 Firestore
 
 ## LINE Flex Message
 由 `lib/line.ts` 的 `buildReminderFlex` 生成。

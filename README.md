@@ -13,6 +13,10 @@ npm install
 npm run dev
 ```
 
+## 管理後台
+- URL：`/admin`
+- 直接讀取 Firebase Firestore 顯示近期打卡與統計概況。
+
 ## 部署（Vercel）
 1. 將此 repo 連結到 Vercel 專案。
 2. 在 Vercel 專案設定新增環境變數（與下方一致）。
