@@ -2,6 +2,14 @@ import admin from "firebase-admin";
 
 let cachedApp: admin.app.App | null = null;
 
+export function hasFirebaseEnv() {
+  return Boolean(
+    process.env.FIREBASE_PROJECT_ID &&
+      process.env.FIREBASE_CLIENT_EMAIL &&
+      process.env.FIREBASE_PRIVATE_KEY
+  );
+}
+
 function getCredential() {
   const projectId = process.env.FIREBASE_PROJECT_ID || "";
   const clientEmail = process.env.FIREBASE_CLIENT_EMAIL || "";

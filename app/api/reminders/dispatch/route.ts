@@ -1,4 +1,4 @@
-import { admin, getDb } from "../../../../lib/firebaseAdmin";
+import { admin, getDb, hasFirebaseEnv } from "../../../../lib/firebaseAdmin";
 import { buildReminderFlex, pushMessage } from "../../../../lib/line";
 import { requirePanelToken } from "../../../../lib/security";
 
@@ -29,6 +29,9 @@ function toTimeParts(date: Date, timeZone: string) {
 }
 
 export async function POST(request: Request) {
+  if (!hasFirebaseEnv()) {
+    return new Response("Firebase environment variables are not configured.", { status: 500 });
+  }
   const db = getDb();
   const auth = requirePanelToken(request);
   if (!auth.ok) return auth.res;

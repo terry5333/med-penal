@@ -1,8 +1,11 @@
-import { admin, getDb } from "../../../lib/firebaseAdmin";
+import { admin, getDb, hasFirebaseEnv } from "../../../lib/firebaseAdmin";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  if (!hasFirebaseEnv()) {
+    return new Response("Firebase environment variables are not configured.", { status: 500 });
+  }
   const db = getDb();
   const body = (await request.json()) as {
     userId: string;

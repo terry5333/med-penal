@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { admin, getDb } from "../../../lib/firebaseAdmin";
+import { admin, getDb, hasFirebaseEnv } from "../../../lib/firebaseAdmin";
 import { replyMessage, verifySignature } from "../../../lib/line";
 
 export const config = {
@@ -19,6 +19,9 @@ function getRawBody(req: NextApiRequest): Promise<string> {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (!hasFirebaseEnv()) {
+    return res.status(500).send("Firebase environment variables are not configured.");
+  }
   const db = getDb();
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");

@@ -1,4 +1,4 @@
-import { admin, getDb } from "../../lib/firebaseAdmin";
+import { admin, getDb, hasFirebaseEnv } from "../../lib/firebaseAdmin";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,6 +19,17 @@ function formatTimestamp(value?: admin.firestore.Timestamp) {
 }
 
 async function getDashboardData() {
+  if (!hasFirebaseEnv()) {
+    return {
+      totals: {
+        medications: 0,
+        schedules: 0,
+        recentTaken: 0,
+        recentPending: 0,
+      },
+      recentIntakes: [],
+    };
+  }
   const db = getDb();
   const [medicationsSnap, schedulesSnap, intakesSnap] = await Promise.all([
     db.collection("medications").get(),
